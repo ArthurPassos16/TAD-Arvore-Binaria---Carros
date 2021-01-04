@@ -23,7 +23,7 @@ TNode *treeInsert(TNode *t, void *key, int (*cmp)(void *, void *)){
     }
 }
 
-TNode *treeQuery(TNode *t, void *key, int(*cmp)(void*, void*)){
+void *treeQuery(TNode *t, void *key, int(*cmp)(void*, void*)){
     if (t == NULL){
         return NULL;
     }
@@ -47,17 +47,20 @@ void simetrico(TNode *t, void (*visit)(void *)){
 
 TNode *treeRemove(TNode *t, void *key, int (*cmp)(void *, void *), void **data){
     TNode *aux;
-    void **data2;
+    void *data2;
 
     if(t != NULL){
         if (cmp(key, t->item) < 0){
-            t->left = treeRemove(t->left, key, cmp, &data);
+            t->left = treeRemove(t->left, key, cmp, &data2);
+            *data=data2;
             return t;
         }else{
             if(cmp(key, t->item) > 0){
-                t->right = treeRemove(t->right, key, cmp, &data);
+                t->right = treeRemove(t->right, key, cmp, &data2);
+                *data=data2;
                 return t;
             }else{
+                printf("achou\n");
                 if(t->left == NULL && t->right == NULL){
                     *data = t->item;
                     free(t);
@@ -85,15 +88,31 @@ TNode *treeRemove(TNode *t, void *key, int (*cmp)(void *, void *), void **data){
             }
         }
     }
-    *data = NULL;
+    *data=NULL;
     return NULL;
 }
 
 void *abpRemoveMenor(TNode *t, void **data){
-    if(t->left == NULL){
-        *data = t->item;
-        return NULL;
-    }else{
-        return abpRemoveMenor(t->left, &data);
+    TNode *aux;
+    void *data2;
+    if(t!=NULL){
+        if(t->left != NULL){
+            t->left = abpRemoveMenor(t->left, &data2);
+            *data=data2;
+            return t;
+        }else{
+            if(t->right!=NULL){
+                *data = t->item;
+                aux = t->right;
+                free(t);
+                return aux;
+            }else{
+                *data = t->item;
+                free(t);
+                return NULL;
+            }
+        }
     }
+    *data=NULL;
+    return NULL;
 }

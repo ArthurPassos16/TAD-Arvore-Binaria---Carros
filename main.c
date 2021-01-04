@@ -17,7 +17,7 @@ int main()
 {
     TNode *t = NULL;
     Carro *carro;
-    void **data;
+    void *data;
     int opcao;
 
     do{
@@ -61,7 +61,7 @@ int main()
                 printf("Digite a placa do carro:\n");
                 fflush(stdin);
                 fgets(carro->placa,8,stdin);
-                carro=(Carro *)treeQuery(t,(void *)&carro->placa,cmp);
+                carro=treeQuery(t,(void *)&carro->placa,cmp);
                 //Se o retorno não for nulo, então informa o carro encontrado
                 if(carro!=NULL){
                     printf("\tCARRO\n");
@@ -79,10 +79,11 @@ int main()
                 fflush(stdin);
                 fgets(carro->placa,8,stdin);
 
-                treeRemove(t,(void *)&carro->placa,cmp, &data);
-                /*Se o retorno não for nulo, então informa o carro removido
+                treeRemove(t, (void *)&carro->placa, cmp, &data);
+
+                //Se o retorno não for nulo, então informa o carro removido
                 if(data!=NULL){
-                    carro = (Carro *)data;
+                    carro=(Carro *)data;
                     printf("\nPlaca: %s",carro->placa);
                     printf("Modelo: %s",carro->modelo);
                     printf("Ano: %d\n",carro->ano);
@@ -90,11 +91,10 @@ int main()
                     printf("Elemento removido!\n\n");
                 }else{
                     printf("\nElemento nao removido\n\n");
-                }*/
-
+                }
                 break;
             case 4:
-                    printf("\tCARRO(S)\n");
+                    printf("CARRO(S)\n");
                     simetrico(t, visit);
                 break;
             case 5:

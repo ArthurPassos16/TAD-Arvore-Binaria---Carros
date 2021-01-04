@@ -9,7 +9,7 @@
 
         TNode *treeInsert(TNode *t, void *key, int (*cmp)(void *, void *));
         TNode *treeRemove(TNode* t, void *key, int(*cmp)(void*, void*), void **data);
-        TNode *treeQuery(TNode *t, void *key, int(*cmp)(void*, void*));
+        void *treeQuery(TNode *t, void *key, int(*cmp)(void*, void*));
         void *abpRemoveMenor(TNode *t, void **data);
         int treeDestroy(TNode *t);
     #else
